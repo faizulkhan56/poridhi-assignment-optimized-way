@@ -35,10 +35,10 @@ build/Release
 node_modules/
 jspm_packages/
 # Ignore the video folder and its contents
-/video/
+
 
 # Ignore all .mp4 files in the project
-*.mp4
+
 *.m4ss
 # Typescript v1 declaration files
 typings/
