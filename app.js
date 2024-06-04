@@ -8,6 +8,8 @@ const port = 3000;
 // Enable CORS for all routes
 app.use(cors());
 
+//app.use("/video",express.static(path.join(__dirname,'video')));
+
 // Serve the DASH manifest file
 app.get('/video.mpd', (req, res) => {
     console.log("called for mpd");
