@@ -107,6 +107,16 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .upload-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .upload-section input {
+            margin-bottom: 10px;
+        }
         @media (max-width: 768px) {
             .header .logo {
                 font-size: 20px;
@@ -163,12 +173,46 @@
                 <button type="button">Comment</button>
             </div>
         </div>
+        <div class="upload-section">
+            <h3>Upload a Video</h3>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="videoFile" id="videoFile" accept="video/*"><br>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
     </div>
     <script>
-        //const url = 'http://localhost:3000/video/video.mpd';
         const url = 'http://localhost:3000/video.mpd';
         const player = dashjs.MediaPlayer().create();
         player.initialize(document.querySelector("#videoPlayer"), url, true);
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileField = document.getElementById('videoFile');
+
+            if (fileField.files.length > 0) {
+                formData.append('videoFile', fileField.files[0]);
+
+                try {
+                    const response = await fetch('http://localhost:3000/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert('File uploaded successfully.');
+                    } else {
+                        alert('Failed to upload file.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while uploading the file.');
+                }
+            } else {
+                alert('Please select a file to upload.');
+            }
+        });
     </script>
 </body>
 </html>
