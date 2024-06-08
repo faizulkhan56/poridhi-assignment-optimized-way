@@ -6,7 +6,7 @@ const multer = require('multer');
 const { exec } = require('child_process');
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
 // Enable CORS for all routes
 app.use(cors());

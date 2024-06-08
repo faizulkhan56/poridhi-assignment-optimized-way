@@ -182,7 +182,7 @@
         </div>
     </div>
     <script>
-        const url = 'http://localhost:3000/video.mpd';
+        const url = 'http://localhost:3002/video.mpd';
         const player = dashjs.MediaPlayer().create();
         player.initialize(document.querySelector("#videoPlayer"), url, true);
 
@@ -195,7 +195,7 @@
                 formData.append('videoFile', fileField.files[0]);
 
                 try {
-                    const response = await fetch('http://localhost:3000/upload', {
+                    const response = await fetch('http://localhost:3001/upload', {
                         method: 'POST',
                         body: formData
                     });
