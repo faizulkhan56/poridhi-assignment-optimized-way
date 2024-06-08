@@ -11,6 +11,9 @@ const port = 3002;
 // Enable CORS for all routes
 app.use(cors());
 
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 
