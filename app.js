@@ -4,6 +4,7 @@ const fs = require('fs');
 const cors = require('cors');
 const multer = require('multer');
 const { exec } = require('child_process');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,9 @@ app.use(cors());
 
 // Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
+
+// Use body-parser to parse JSON bodies into JS objects
+app.use(bodyParser.json());
 
 // Basic authentication middleware
 const basicAuth = (req, res, next) => {
@@ -28,6 +32,18 @@ const basicAuth = (req, res, next) => {
     res.set('WWW-Authenticate', 'Basic realm="401"');
     res.status(401).send('Authentication required.');
 };
+
+// Login endpoint
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    const auth = { login: 'admin', password: 'password' }; // Change this to your desired login and password
+
+    if (username === auth.login && password === auth.password) {
+        res.status(200).send('Login successful');
+    } else {
+        res.status(401).send('Login failed');
+    }
+});
 
 // Apply basic authentication to the /upload endpoint
 app.post('/upload', basicAuth, upload.single('videoFile'), (req, res) => {
